@@ -1,6 +1,9 @@
 package net.mccullrs.deming;
 
 import com.mojang.logging.LogUtils;
+import net.mccullrs.deming.block.ModBlocks;
+import net.mccullrs.deming.item.ModCreativeModTabs;
+import net.mccullrs.deming.item.ModItems;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -26,6 +29,12 @@ public class Deming
     {
         IEventBus modEventBus = context.getModEventBus();
 
+        ModCreativeModTabs.register(modEventBus);
+
+        ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+
+
         modEventBus.addListener(this::commonSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -41,7 +50,10 @@ public class Deming
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(ModItems.DILDO);
+            event.accept(ModBlocks.CUM_BLOCK);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
